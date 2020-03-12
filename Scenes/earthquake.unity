@@ -153,7 +153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: 0.25
   amplitude: 20
-  frequency: 2
+  frequency1: 10
+  frequency2: 10
+  amp_x: 10
+  amp_z: 10
 --- !u!154 &138857223
 TerrainCollider:
   m_ObjectHideFlags: 0

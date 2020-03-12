@@ -7,22 +7,30 @@ public class earthquakeSim : MonoBehaviour
     public float scale = 20f;
     private int height = 256;
     public int amplitude = 20;
-    private float offset = 0;
-    public float frequency = 10;
-
+    private float offset1,offset2 = 0;
+    [Range(-10.0f,10.0f)]
+    public float frequency1,frequency2 = 10;
+    Terrain ground;
+    Rigidbody rb;
+    public float amp_x = 10f;
+    public float amp_z = 10f;
     // Start is called before the first frame update
     void Start()
     {
-        Terrain ground = GetComponent<Terrain>();
+        rb = GetComponent<Rigidbody>();
+        ground = GetComponent<Terrain>();
         ground.terrainData = GenTerrain(ground.terrainData);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Terrain ground = GetComponent<Terrain>();
+        
         ground.terrainData = GenTerrain(ground.terrainData);
-        offset += Time.deltaTime * frequency;
+        offset1 += Time.deltaTime * frequency1;
+        offset2 += Time.deltaTime * frequency2;
+        Vector3 oscillate = new Vector3((calculateHeights(10,10)-0.5f)*amp_x, 0, (calculateHeights(10, 10) - 0.5f) * amp_z);
+        transform.position = oscillate;
     }
     TerrainData GenTerrain(TerrainData terraindata)
     {
@@ -45,8 +53,8 @@ public class earthquakeSim : MonoBehaviour
     }
     float calculateHeights(int x,int y)
     {
-        float xCoord = (float)x / width * scale + offset;
-        float yCoord = (float)y / height *scale + offset;
+        float xCoord = (float)x / width * scale + offset1;
+        float yCoord = (float)y / height *scale + offset2;
         
         return Mathf.PerlinNoise(xCoord, yCoord);
 
